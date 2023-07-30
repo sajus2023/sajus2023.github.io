@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CS416 Data Visualization - Narrative Visualization using d3</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <!--<script src="https://d3js.org/d3.v4.js"></script>-->
+    <script src="./js/scripts.js"></script>
+    <link href="./css/styles.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container-fluid">
+        <div id="myCarousel" class="carousel slide" data-bs-interval="false">
+            <!-- Carousel indicators -->
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active"></button>
+                <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1"></button>
+                <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2"></button>
+                <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="3"></button>
+                <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="4"></button>
+                <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="5"></button>
+                <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="6"></button>
+            </div>
+            
+            <!-- Wrapper for carousel items -->
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <div class="carousel-text-custom text-center">
+                        <h1>Global Warming Causes and Impact</h1>
+                        <br>
+                        <h2>Interactive Slideshow analyzing global warming causes and impact</h2>
+                        <br>
+                        <h3><b>CS411 Data Visualization - </b>Summer 2023</h3>
+                        <br>
+                        <h3>Saju Sathyanathan</h3>
+                        <br>
+                    </div>
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>Introduction</h5>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="carousel-text-custom text-center">
+                        <h1>Datasets</h1>
+                        <br>
+                        <table class="table">
+                            <thead>
+                              <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Dataset</th>
+                                <th scope="col">Source</th>
+                                <th scope="col">Link</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row">1</th>
+                                    <td>NOAA National Centers for Environmental information, Climate at a Glance: Global Time Series, published July 2023, retrieved on July 29, 2023</td>
+                                    <td>National Oceanic and Atmospheric Association Global Monitoring Laboratory</td>
+                                    <td><a href="https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/global/time-series">Link</a></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">2</th>
+                                    <td>Annual Surface Temperature Change</td>
+                                    <td>Food and Agriculture Organization Corporate Statistical Database (FAOSTAT) based on GISTEMP data from the NASA GISS</td>
+                                    <td><a href="https://opendata.arcgis.com/datasets/4063314923d74187be9596f10d034914_0.csv">Link</a></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">3</th>
+                                    <td>Change in Mean Sea Levels</td>
+                                    <td>NOAA Laboratory for Satellite Altimetry, Sea Level Rise</td>
+                                    <td><a href="https://opendata.arcgis.com/datasets/b84a7e25159b4c65ba62d3f82c605855_0.csv">Link</a></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">4</th>
+                                    <td>Climate-related Disasters Frequency</td>
+                                    <td>M-DAT, CRED / UCLouvain, Brussels, Belgium</td>
+                                    <td><a href="https://opendata.arcgis.com/datasets/b13b69ee0dde43a99c811f592af4e821_0.csv">Link</a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>Datasets</h5>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="carousel-text-custom text-center">
+                        <h2><b>Proof: </b> Earth's temperature has risen by an average of 0.08°C per decade since 1880, about 0.27°C in total. The rate of warming since 1981 is more than twice as fast: 0.18°C per decade.</h2>
+                        <p>Move over the graph to see the values at any given year</p>
+                        <br>
+                        <div id="annualtempchart" class="carousel-chart-custom">
+                            <div id="annualtempchartooltip" class="mytooltip">
+                                <div class="temperature"></div>
+                                <div class="year"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>Annual Surface Temperature Change</h5>
+                        <p></p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="carousel-text-custom text-center">
+                        <h3><b>Cause: </b> The data on the concentration of carbon dioxide in the atmosphere, on a monthly and yearly basis, dating back to 1958 indicates its steady increase. It is the major cause of global warming.</h3>
+                        <p>Move over the graph to see the values at any given year</p>
+                        <div id="co2changechart" class="carousel-chart-custom">
+                            <div id="co2changecharttooltip" class="mytooltip">
+                                <div class="CO2ppm"></div>
+                                <div class="year"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>World Monthly Atmospheric CO2 Concentrations</h5>
+                        <p></p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="carousel-text-custom text-center">
+                        <h2><b>Impact: </b>Between 1901 and 2018, the average global sea level rose by 15-25 cm, or 1-2 mm per year. This rate accelerated to 4.62 mm/yr for the decade 2013-2022. Rising seas ultimately impact every coastal and island population on Earth</h2>
+                        <br>
+                        <div id="seallevelchangechart" class="carousel-chart-custom">
+                            <div id="sealevelchangecharttooltip" class="mytooltip">
+                                <div class="sealevelchange"></div>
+                                <div class="year"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>Mean sea level change</h5>
+                        <p></p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="carousel-text-custom text-center">
+                        <h2><b>Impact: </b>The trend indicates an increase in frequency of natural disasters together with the increase in the earth's surface temperature.</h2>
+                        <p>Select a country from the list below to see the trend in that country.</p>
+                        <select id="selectButton"></select>
+                        <br>
+                        <div id="disasterchart" class="carousel-chart-custom">
+                            <div id="disastercharttooltip" class="mytooltip">
+                                <!-- Initialize a select button -->
+                                <div class="numberofdisasters"></div>
+                                <div class="year"></div>
+                                <div class="country"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>Frequency of natural disasters</h5>
+                        <p></p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="carousel-text-custom text-center">
+                        <h3>About the visualization</h3>
+                        <br>
+                        <h4><b>Messaging: </b>Analyzing a subset of relevant data supports the hypothesis that the increase in earth's surface temperature (Global Warming) has severe impact on life on earth.</h4>
+                        <br>
+                        <h4><b>Narrative Structure: </b>Interactive slide-show - The Interactive Slideshow structure follows a typical slideshow format, but incorporates interaction mid-narrative within the confines of each slide. All scenes with charts in this visualization interacts with the viewer through tooltips and filters.</h4>
+                        <br>
+                        <h4><b>Visual Structure: </b>A common theme is applied to all scenes there by avoiding distractions - the theme includes a background image, colors and font on the scenes. Important information is depecited using colors that are visually appeasing.</h4>
+                        <br>
+                        <h4><b>Scenes: </b>The scenes are ordered based on the story - proof, causes and effects of global warming. The scenes transition from indicating the usage of renowned datasets, proof of global warming following by its causes and effects.</h4>
+                        <br>
+                        <h4><b>Annotations: </b>Interesting trends are annotated in the scenes. Template applied to make the scenes consistent for easier interaction.</h4>
+                        <br>
+                        <h4><b>Parameters: </b>The viewer can apply filtering on various countries to see the impact of the global warming by selecting countries in scene 6.</h4>
+                        <br>
+                        <h4><b>Triggers: </b>The viewer can apply filtering and can use mouse to show tooltips with details on demand. Visual and textual cues are provided to the viewer.</h4>
+                    </div>
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>About the visualization</h5>
+                        <p></p>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- Carousel controls -->
+            <a class="carousel-control-prev" href="#myCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
+            </a>
+            <a class="carousel-control-next" href="#myCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon"></span>
+            </a>
+        </div>
+    </div>
+    <div class="container-fluid mt-3">
+        <p>© Saju Sathyanathan</p>
+    </div>      
+
+    <!-- d3 scripts -->
+    <script>
+        // Slide 3 - Annual temperature change
+        drawAnnualTemperatureChange()
+
+        // Slide 4 - CO2 concentration
+        drawACO2Change()
+
+        // Slide 5 - Mean sea level change
+        drawMeanSeaLevelChange()
+
+        // Slide 6 - Natural disasters
+        drawDisasterCountChange()
+    </script>
+</body>

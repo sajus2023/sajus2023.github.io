@@ -1,0 +1,30 @@
+.carousel-item {
+    min-height: 95vh;
+    background-image: url("/assets/background.png");
+    background-size: cover;
+}
+.carousel-text-custom {
+    position: absolute;
+    margin: 0px;
+    min-width: 100vh;
+    color: white;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+.carousel-text-custom h1 {
+    font-size: 80px;
+}
+
+.carousel-chart-custom {
+    background-color: white;
+}
+
+.mytooltip {
+    border: 1px solid grey;
+    position: absolute;
+    padding: 10px;
+    background-color:grey;
+    display: none;
+    pointer-events: none;
+}
